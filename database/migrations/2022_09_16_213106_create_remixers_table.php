@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('labels', function (Blueprint $table) {
+        Schema::create('remixers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('title');
-            $table->text('slug');
-            
-            // Relationships
-            $table->unsignedBigInteger('artist_id');
-            $table->foreign('artist_id')->references('id')->on('users');
-            
+            $table->integer('track_id')->constrained('tracks');
+            $table->integer('user_id')->constrained('users');
         });
     }
 
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('labels');
+        Schema::dropIfExists('remixers');
     }
 };

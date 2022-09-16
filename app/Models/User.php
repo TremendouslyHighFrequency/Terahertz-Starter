@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use \App\Models\Album;
+use App\Models\Label;
+use App\Models\Track;
 
 class User extends Authenticatable
 {
@@ -41,4 +44,39 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * The tracks that belong to the user / Artist.
+     */
+    public function tracks()
+    {
+        return $this->belongsToMany(Track::class);
+    }
+
+    /**
+     * The Albums that belong to the user / Artist.
+     */
+    public function albums()
+    {
+        return $this->belongsToMany(Album::class);
+    }
+
+    /**
+     * The Label that belong to the user / Artist.
+     */
+    public function label()
+    {
+        return $this->hasOne(Track::class);
+    }
+
+    /**
+     * The Credits that belong to the user / Artist from Albums
+     */
+    public function credits()
+    {
+        return $this->belongsToMany(Album::class)->withPivot('reason');
+    }
+
+    
 }

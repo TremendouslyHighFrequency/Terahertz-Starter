@@ -25,13 +25,16 @@ return new class extends Migration
             $table->boolean('free_download');
             $table->float('price_fiat');
             $table->float('price_ergo');
+            $table->longText('description');
+            $table->text('promo_link');
 
             // Relationships
-            $table->unsignedBigInteger('artist_id');
-            $table->foreign('artist_id')->references('id')->on('users');
+            $table->unsignedBigInteger('publisher_id');
+            $table->foreign('publisher_id')->references('id')->on('users');
 
             // Files
             $table->text('album_artwork_url');
+            $table->text('archive_url');
 
         });
     }

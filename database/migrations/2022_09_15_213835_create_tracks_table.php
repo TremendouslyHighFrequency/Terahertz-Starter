@@ -31,10 +31,6 @@ return new class extends Migration
             $table->boolean('itunes_block');
             $table->boolean('google_block');
 
-            // Relationships
-            $table->unsignedBigInteger('artist_id');
-            $table->foreign('artist_id')->references('id')->on('users');
-
             // Files
             $table->text('artwork_url');
             $table->text('audio_file_url');
