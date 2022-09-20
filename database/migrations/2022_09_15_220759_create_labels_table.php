@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('slug');
             
             // Relationships
-            $table->unsignedBigInteger('artist_id');
-            $table->foreign('artist_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             
         });
     }

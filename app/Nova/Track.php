@@ -3,30 +3,33 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Gravatar;
-use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Password;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\BelongsToMany;
 
-class User extends Resource
+
+class Track extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\User::class;
+    public static $model = \App\Models\Track::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -34,7 +37,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
     ];
 
     /**
@@ -47,35 +50,30 @@ class User extends Resource
     {
         return [
             ID::make()->sortable(),
+            Text::make('Title'),
+            Text::make('Slug')->hideFromIndex(),
+            Select::make('Type', 'track_type')->options([
+                'original_mix' => 'Original Mix',
+                'remix' => 'Remix',
+                'bonus' => 'Bonus Track',
+            ])->displayUsingLabels(),
+            Boolean::make('Explicit'),
+            Trix::make('Summary'),
+            Trix::make('Description'),
+            Trix::make('Lyrics'),
+            Date::make('Release Date'),
+            Number::make('Price Fiat')->step('any'),
+            Number::make('Price Ergo')->step('any'),
+            Boolean::make('Itunes Block'),
+            Boolean::make('Google Block'),
+            File::make('Artwork', 'artwork_url'),
+            File::make('Audio File', 'audio_file_url'),
+            File::make('High Def File', 'high_resolution_file_url'),
+            
 
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Text::make('Email')
-                ->sortable()
-                ->rules('required', 'email', 'max:254')
-                ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
-
-            Password::make('Password')
-                ->onlyOnForms()
-                ->creationRules('required', Rules\Password::defaults())
-                ->updateRules('nullable', Rules\Password::defaults()),
-
-            Text::make('Nautilus Address', 'nautilus_address'),
-
+            BelongsToMany::make('Users'),
             BelongsToMany::make('Albums'),
-            BelongsToMany::make('Tracks'),
-            BelongsToMany::make('Credits', 'credits', 'App\Nova\Album')
-                ->fields(function ($request, $relatedModel) {
-                    return [
-                        Text::make('Reason'),
-                    ];
-                }),
-            HasMany::make('Labels'),
+            BelongsToMany::make('Remixers', 'remixers', 'App\Nova\User'),
         ];
     }
 

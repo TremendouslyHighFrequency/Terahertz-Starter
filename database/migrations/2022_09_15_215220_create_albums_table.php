@@ -20,21 +20,21 @@ return new class extends Migration
             // Basics
             $table->text('title');
             $table->text('slug');
-            $table->text('catalog_number');
-            $table->date('release_date');
-            $table->boolean('free_download');
+            $table->text('catalog_number')->nullable();
+            $table->date('release_date')->nullable();
+            $table->boolean('free_download')->nullable();
             $table->float('price_fiat');
             $table->float('price_ergo');
-            $table->longText('description');
-            $table->text('promo_link');
+            $table->longText('description')->nullable();
+            $table->text('promo_link')->nullable();
 
             // Relationships
             $table->unsignedBigInteger('publisher_id');
-            $table->foreign('publisher_id')->references('id')->on('users');
+            $table->foreign('publisher_id')->references('id')->on('users')->nullable();
 
             // Files
-            $table->text('album_artwork_url');
-            $table->text('archive_url');
+            $table->text('album_artwork_url')->nullable();
+            $table->text('archive_url')->nullable();
 
         });
     }

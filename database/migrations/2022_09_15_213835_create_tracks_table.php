@@ -21,20 +21,20 @@ return new class extends Migration
             $table->string('title');
             $table->text('slug');
             $table->string('track_type');
-            $table->boolean('explicit');
-            $table->text('summary');
-            $table->text('description');
+            $table->boolean('explicit')->nullable();
+            $table->text('summary')->nullable();
+            $table->text('description')->nullable();
             $table->longText('lyrics');
-            $table->date('release_date');
+            $table->date('release_date')->nullable();
             $table->float('price_fiat');
             $table->float('price_ergo');
-            $table->boolean('itunes_block');
-            $table->boolean('google_block');
+            $table->boolean('itunes_block')->nullable();
+            $table->boolean('google_block')->nullable();
 
             // Files
-            $table->text('artwork_url');
-            $table->text('audio_file_url');
-            $table->text('high_resolution_file_url');
+            $table->text('artwork_url')->nullable();
+            $table->text('audio_file_url')->nullable();
+            $table->text('high_resolution_file_url')->nullable();
         });
     }
 

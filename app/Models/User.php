@@ -63,11 +63,20 @@ class User extends Authenticatable
     }
 
     /**
+     * The Albums that belong to the user / Artist.
+     */
+    public function albumsPublished()
+    {
+        return $this->belongsToMany(Album::class, 'publisher_id', 'id');
+    }
+
+
+    /**
      * The Label that belong to the user / Artist.
      */
-    public function label()
+    public function labels()
     {
-        return $this->hasOne(Track::class);
+        return $this->hasMany(Label::class);
     }
 
     /**
@@ -75,7 +84,15 @@ class User extends Authenticatable
      */
     public function credits()
     {
-        return $this->belongsToMany(Album::class)->withPivot('reason');
+        return $this->belongsToMany(Album::class, 'credits')->withPivot('reason');
+    }
+
+    /**
+     * The Remixes that belong to the user / Artist
+     */
+    public function remixes()
+    {
+        return $this->belongsToMany(Track::class);
     }
 
     
