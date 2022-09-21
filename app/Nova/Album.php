@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Currency;
-
+use Laravel\Nova\Fields\Slug;
 
 class Album extends Resource
 {
@@ -50,12 +50,12 @@ class Album extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('title'),
-            Text::make('slug'),
+            Text::make('Title'),
+            Slug::make('Slug')->from('Title'),
             Text::make('Catalog #', 'catalog_number'),
             Date::make('Release Date'),
-            Currency::make('price_fiat'),
-            Number::make('price_ergo')->step(0.000000001),
+            Number::make('price_fiat'),
+            Number::make('price_ergo')->min(0.000001)->max(100)->step(0.000001),
             Trix::make('Description'),
             Text::make('Promo Link'),
             File::make('Album Artwork', 'album_artwork_url'),

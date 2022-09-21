@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('release_date')->nullable();
             $table->boolean('free_download')->nullable();
             $table->float('price_fiat');
-            $table->float('price_ergo');
+            $table->float('price_ergo', 24, 10);
             $table->longText('description')->nullable();
             $table->text('promo_link')->nullable();
 

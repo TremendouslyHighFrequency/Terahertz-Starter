@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -43,8 +44,8 @@ class Label extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('title'),
-            Text::make('slug'),
+            Text::make('Title'),
+            Slug::make('Slug')->from('Title'),
             BelongsTo::make('User')
         ];
     }

@@ -13,7 +13,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\BelongsToMany;
-
+use Laravel\Nova\Fields\Slug;
 
 class Track extends Resource
 {
@@ -51,7 +51,7 @@ class Track extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Title'),
-            Text::make('Slug')->hideFromIndex(),
+            Slug::make('Slug')->from('Title')->hideFromIndex(),
             Select::make('Type', 'track_type')->options([
                 'original_mix' => 'Original Mix',
                 'remix' => 'Remix',
@@ -63,7 +63,7 @@ class Track extends Resource
             Trix::make('Lyrics'),
             Date::make('Release Date'),
             Number::make('Price Fiat')->step('any'),
-            Number::make('Price Ergo')->step('any'),
+            Number::make('Price Ergo')->min(0.000001)->max(100)->step(0.000001),
             Boolean::make('Itunes Block'),
             Boolean::make('Google Block'),
             File::make('Artwork', 'artwork_url'),
