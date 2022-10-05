@@ -13,6 +13,8 @@
         <!-- Scripts -->
         <script src="{{ asset('vendor/terahertz/terahertz.js') }}"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=xguuwkguxdjneilimwe9kw" async="true"></script>
     </head>
     <body class="guest">
         <div class="font-sans text-gray-900 antialiased">

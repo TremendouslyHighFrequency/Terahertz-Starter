@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use \App\Models\Album;
 use App\Models\Label;
 use App\Models\Track;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nautilus_address',
+        'publisher'
     ];
 
     /**
@@ -44,6 +47,43 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+        /**
+     * A user may be assigned many roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    /**
+     * Assign a new role to the user.
+     *
+     * @param  mixed  $role
+     */
+    public function assignRole($role)
+    {
+        if (is_string($role)) {
+            $role = Role::whereName($role)->firstOrFail();
+        }
+
+        $this->roles()->syncWithoutDetaching($role);
+    }
+
+    /**
+     * Fetch the user's abilities.
+     *
+     * @return array
+     */
+    public function abilities()
+    {
+        return $this->roles
+            ->map->abilities
+            ->flatten()->pluck('name')->unique();
+    }
 
 
     /**

@@ -3,20 +3,19 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Slug;
-use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\BelongsToMany;
 
-class Label extends Resource
+class Role extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Label::class;
+    public static $model = \App\Models\Role::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,7 +30,7 @@ class Label extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'name'
     ];
 
     /**
@@ -54,9 +53,10 @@ class Label extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title'),
-            Slug::make('Slug')->from('Title'),
-            BelongsTo::make('User')
+            Text::make('Name'),
+            Text::make('Label'),
+            
+            BelongsToMany::make('Users'),
         ];
     }
 

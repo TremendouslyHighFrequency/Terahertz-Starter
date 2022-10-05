@@ -16,6 +16,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::style('terahertz-theme', asset('css/nova-theme.css'));
     }
 
     /**

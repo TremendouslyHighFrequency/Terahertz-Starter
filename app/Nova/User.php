@@ -5,6 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
@@ -38,6 +39,16 @@ class User extends Resource
     ];
 
     /**
+     * Determine if the given resource is authorizable.
+     *
+     * @return bool
+     */
+    public static function authorizable()
+    {
+        return false;
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -66,6 +77,8 @@ class User extends Resource
                 ->updateRules('nullable', Rules\Password::defaults()),
 
             Text::make('Nautilus Address', 'nautilus_address'),
+        
+            Boolean::make('publisher'),
 
             BelongsToMany::make('Albums'),
             BelongsToMany::make('Tracks'),

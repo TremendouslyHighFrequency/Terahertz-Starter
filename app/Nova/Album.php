@@ -41,6 +41,16 @@ class Album extends Resource
     ];
 
     /**
+     * Determine if the given resource is authorizable.
+     *
+     * @return bool
+     */
+    public static function authorizable()
+    {
+        return false;
+    }
+
+    /**
      * Get the fields displayed by the resource.
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
@@ -54,8 +64,8 @@ class Album extends Resource
             Slug::make('Slug')->from('Title'),
             Text::make('Catalog #', 'catalog_number'),
             Date::make('Release Date'),
-            Number::make('price_fiat'),
-            Number::make('price_ergo')->min(0.000001)->max(100)->step(0.000001),
+            Number::make('Fiat Price', 'price_fiat'),
+            Number::make('Ergo Price', 'price_ergo')->min(0.000001)->max(100)->step(0.000001),
             Trix::make('Description'),
             Text::make('Promo Link'),
             File::make('Album Artwork', 'album_artwork_url'),
