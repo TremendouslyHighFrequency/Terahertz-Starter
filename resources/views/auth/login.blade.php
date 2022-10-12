@@ -8,6 +8,10 @@
 
         <x-terahertz::nautilus-login />
 
+        <hr style="margin-top:20px; margin-bottom: 20px;">
+
+        <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 14px;">Standard Login</h3>
+
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 

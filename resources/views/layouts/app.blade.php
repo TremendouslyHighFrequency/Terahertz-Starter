@@ -10,10 +10,15 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=xguuwkguxdjneilimwe9kw" async="true"></script>
+        <!-- Scripts -->
+        <script src="{{ asset('vendor/terahertz/terahertz.js') }}"></script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        @if(config('config.app.env') == 'staging')
+            <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=xguuwkguxdjneilimwe9kw" async="true"></script>
+        @endif 
+
     </head>
     <body class="font-sans antialiased app">
         <div class="min-h-screen bg-gray-100">
@@ -31,5 +36,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+
     </body>
 </html>

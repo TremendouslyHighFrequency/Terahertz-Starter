@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TracksController;
+use \App\Http\Controllers\TestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->middleware('auth')->name('dashboard');
 
 
 Route::resource('tracks', TracksController::class);
